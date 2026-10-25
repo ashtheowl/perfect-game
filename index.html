@@ -247,7 +247,7 @@ function defaultChar(w) {
     who: w,
     pj: { top: 'long', bottoms: 'long', colour: b ? '#FF8CC6' : '#6EC1FF', bcolour: b ? '#6EC1FF' : '#FF8CC6',
           pattern: b ? 'hearts' : 'stars', pcolour: '#FFFFFF', slippers: b ? 'bunny' : 'fluffy', extras: [] },
-    hair: { style: b ? 'long' : 'ponytail', fringe: b ? 'straight' : 'side', colour: b ? '#C69060' : '#1F1A1E',
+    hair: { style: b ? 'waves' : 'long', fringe: b ? 'straight' : 'side', colour: b ? '#C69060' : '#1F1A1E',
             extras: ['bow'], acc: b ? '#FF4FA3' : '#4FA8F0' }
   };
 }
@@ -435,8 +435,15 @@ function hairParts(h, f, d) {
     case 'long':
       back = `<path d="M54 96 Q47 33 100 33 Q153 33 146 96 L157 228 Q128 240 100 237 Q72 240 43 228 Z" ${L}/>` + strand(52, 150, 50, 220) + strand(150, 150, 150, 220);
       front = top; break;
+    case 'waves': {
+      back = `<path d="M54 96 Q47 33 100 33 Q153 33 146 96 Q162 118 151 142 Q164 166 153 190 Q166 212 151 232 Q126 246 100 238 Q74 246 49 232 Q34 212 47 190 Q36 166 49 142 Q38 118 54 96 Z" ${L}/>`;
+      const curl = (x, y, m) => `<path d="M${x} ${y} q${-7 * m} 9 0 18 q${7 * m} 9 0 18" stroke="${d}" stroke-opacity=".55" stroke-width="2.5" fill="none" stroke-linecap="round"/>`;
+      back += curl(52, 118, 1) + curl(54, 176, 1) + curl(148, 118, -1) + curl(146, 176, -1) +
+        `<path d="M62 226 q-8 -4 -4 -12 q6 -6 10 2" stroke="${d}" stroke-opacity=".55" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M138 226 q8 -4 4 -12 q-6 -6 -10 2" stroke="${d}" stroke-opacity=".55" stroke-width="2.5" fill="none" stroke-linecap="round"/>`;
+      front = top; break;
+    }
     case 'bob':
-      back = `<path d="M51 96 Q45 33 100 33 Q155 33 149 96 L155 150 Q146 160 134 154 L66 154 Q54 160 45 150 Z" ${L}/>`;
+      back =`<path d="M51 96 Q45 33 100 33 Q155 33 149 96 L155 150 Q146 160 134 154 L66 154 Q54 160 45 150 Z" ${L}/>`;
       front = top; break;
     case 'ponytail':
       back = `<path d="M124 46 Q184 56 175 130 Q171 182 156 216 Q151 176 146 140 Q140 98 116 58 Z" ${L}/>` + strand(162, 90, 160, 190);
@@ -943,7 +950,7 @@ const CATS = {
   ],
   hair: [
     { icon: '💇', name: 'Hairstyle', kind: 'choice', path: 'hair.style', view: '10 0 180 250',
-      opts: [['long', 'Long'], ['ponytail', 'Ponytail'], ['bunches', 'Bunches'], ['plaits', 'Plaits'], ['bun', 'Bun'], ['spacebuns', 'Space buns'], ['curly', 'Curly'], ['bob', 'Bob']] },
+      opts: [['long', 'Long straight'], ['waves', 'Loose curls'], ['ponytail', 'Ponytail'], ['bunches', 'Bunches'], ['plaits', 'Plaits'], ['bun', 'Bun'], ['spacebuns', 'Space buns'], ['curly', 'Curly'], ['bob', 'Bob']] },
     { icon: '✂️', name: 'Fringe', kind: 'choice', path: 'hair.fringe', view: '35 22 130 112',
       opts: [['none', 'No fringe'], ['straight', 'Straight'], ['side', 'Side swept']] },
     { icon: '🎨', name: 'Hair colour', kind: 'colour', path: 'hair.colour', opts: HAIR_COL },
